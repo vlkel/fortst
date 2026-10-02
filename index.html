@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Третя доба</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="scenario.js"></script>
+<script src="engine.js"></script>
+<script>
+(function () {
+  'use strict';
+  var SC = window.SCENARIO;
+  var E = window.Engine;
+  var app = document.getElementById('app');
+
+  // Тексти інтерфейсу (не зі сценарію)
+  var UI = {
+    next: 'Далі',
+    debrief: 'Розбір',
+    restart: 'Почати знову',
+    session1: 'Перша зустріч',
+    session2: 'Друга зустріч',
+    epilogue: 'Через місяць'
+  };
+
+  var FLAG_TEXT = {
+    conf: 'Пояснено конфіденційність і її межі',
+    stab: 'Клієнт отримав навичку стабілізації',
+    norm: 'Реакції нормалізовано',
+    support: 'Активовано підтримку (напарник, дружина)',
+    screen: 'Зроблено прямий скринінг ризиків',
+    safety_plan: 'Складено план безпеки',
+    risk_minimized: 'Думки про смерть знецінено',
+    escalated: 'Непропорційна ескалація',
+    alc_missed: 'Обмовку про алкоголь пропущено',
+    alc_unspoken: 'Тему алкоголю закрито порадою',
+    label: 'Передчасний діагностичний ярлик',
+    retrauma: 'Примушування до детальної розповіді',
+    duty_removed: 'Рішення про відсторонення без клієнта',
+    plan: 'Домовились про наступну зустріч',
+    benzo: 'Призначено транквілізатор',
+    avoid: 'Закріплено уникнення',
+    tf_started: 'Розпочато КПТ з фокусом на травмі',
+    referral: 'Скеровано до психотерапевта',
+    followup: 'Призначено контрольну зустріч',
+    collusion: 'Зустріч для галочки',
+    basic: 'Подбали про базові потреби',
+    measure_early: 'Передчасний опитувальник PCL-5',
+    group_debrief: 'Груповий дебрифінг',
+    monitored: 'Моніторинг динаміки',
+    resent: 'Командир привів його вдруге',
+    walkout: 'Клієнт пішов раніше (обрив)',
+    flash_done: 'Був флешбек'
+  };
+
+  // Як прапорець впливає на фінал
+  var FLAG_EFFECT = {
+    conf: 'змінює реакцію на рекомендацію командирові в N8',
+    stab: 'R -1, збудження -1 між зустрічами',
+    norm: 'R -1, сором -1 між зустрічами',
+    support: 'R -2, збудження -1 між зустрічами',
+    screen: 'відкриває N6B, якщо довіра 6 і більше',
+    safety_plan: 'суїцидальний ризик у R дорівнює 0',
+    risk_minimized: 'суїцидальний ризик у R дорівнює 3, фінал E1 закрито',
+    escalated: 'суїцидальний ризик у R дорівнює 0, але довіра обвалюється',
+    alc_missed: 'R +2, збудження +1 між зустрічами, фінал E1 закрито',
+    alc_unspoken: 'R +2, збудження +1 між зустрічами, фінал E1 закрито',
+    label: 'R +1, збудження і сором +1 між зустрічами',
+    retrauma: 'R +2 і збудження +1 між зустрічами за кожен раз',
+    duty_removed: 'сором +1 між зустрічами',
+    plan: 'друга зустріч за домовленістю, довіра +1',
+    benzo: 'R +1',
+    avoid: 'R +1 за кожен раз',
+    tf_started: 'контакт із допомогою',
+    referral: 'контакт із допомогою',
+    followup: 'контакт із допомогою',
+    resent: 'довіра -1 і сором +1 на вході, при довірі 2 і менше фінал E5',
+    walkout: 'решту першої зустрічі пропущено'
+  };
+
+  var TERM_TEXT = {
+    Z: 'Збудження наприкінці',
+    retrauma: 'Ретравматизація, по 2 за кожен раз',
+    label: 'Діагностичний ярлик',
+    alcohol: 'Алкоголь пропущено або тему закрито',
+    suicide: 'Суїцидальний ризик (3 якщо знецінено, 0 якщо план безпеки або ескалація, 1 якщо не з\'ясовано)',
+    benzo: 'Транквілізатор',
+    avoid: 'Уникнення',
+    support: 'Підтримка',
+    stab: 'Навичка стабілізації',
+    norm: 'Нормалізація реакцій'
+  };
+
+  var ENDING_RULE = {
+    E4: 'R 7 і більше, а контакту з допомогою немає',
+    E5: 'командир привів його вдруге, а довіра 2 і менше',
+    E1: 'R 3 і менше, ризик не знецінено, алкоголь не пропущено',
+    E2: 'R 6 і менше',
+    E3: 'R 7 і більше, але є контакт із допомогою'
+  };
+
+  var SCALE_NAME = { D: 'Довіра', Z: 'Збудження', S: 'Сором' };
+
+  // Стан гри
+  var st, screen, expr, lastStep, queue;
+
+  function h(tag, attrs, children) {
+    var el = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === 'text') el.textContent = attrs[k];
+      else if (k === 'onclick') el.addEventListener('click', attrs[k]);
+      else el.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) {
+      if (c == null) return;
+      el.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+    });
+    return el;
+  }
+
+  function faceEl(n, cls) {
+    return h('div', { 'class': (cls || 'face') + ' e' + n, 'data-expr': String(n),
+      role: 'img', 'aria-label': SC.expressions[String(n)] });
+  }
+
+  function sessionLabel(nodeId) {
+    return E.NODE[nodeId].session === 1 ? UI.session1 : UI.session2;
+  }
+
+  function reset() {
+    st = E.newState();
+    expr = 1;
+    lastStep = null;
+    queue = [];
+    go({ type: 'intro', i: 0 });
+  }
+
+  function go(s) {
+    screen = s;
+    if (s.type === 'node' && s.id === 'FLASH') expr = E.NODE.FLASH.entry_expr;
+    if (s.type === 'walkout') expr = SC.walkout.expr;
+    if (s.type === 'epilogue') expr = SC.endings[E.ending(st)].expr;
+    render();
+  }
+
+  // Що показати після екрана з кнопкою «Далі»
+  function advance() {
+    var s = screen;
+    if (s.type === 'intro') {
+      if (s.i + 1 < SC.intro.length) go({ type: 'intro', i: s.i + 1 });
+      else go({ type: 'node', id: 'N1' });
+    } else if (s.type === 'reply' || s.type === 'walkout' || s.type === 'session2') {
+      go(queue.shift());
+    } else if (s.type === 'epilogue') {
+      go({ type: 'debrief' });
+    }
+  }
+
+  function pick(idx) {
+    var id = screen.id;
+    var res = E.step(st, id, idx);
+    lastStep = res;
+    expr = res.expr;
+    queue = [];
+    if (res.walkout) queue.push({ type: 'walkout' });
+    if (res.session2) queue.push({ type: 'session2' });
+    queue.push(res.next === null ? { type: 'epilogue' } : { type: 'node', id: res.next });
+    go({ type: 'reply', id: id, idx: idx, reply: res.reply });
+  }
+
+  function nextButton(text) {
+    return h('div', { 'class': 'actions' }, [
+      h('button', { 'class': 'btn', type: 'button', 'data-action': 'next', text: text || UI.next, onclick: advance })
+    ]);
+  }
+
+  function panelScreen(children) {
+    app.innerHTML = '';
+    var panel = h('div', { 'class': 'panel' }, children);
+    app.appendChild(h('div', { 'class': 'stage' }, [
+      h('div', { 'class': 'face-area' }, [faceEl(expr)]),
+      h('div', { 'class': 'panel-wrap' }, [panel])
+    ]));
+  }
+
+  function render() {
+    // Варіант під нерухомим курсором не підсвічується, доки мишу не зрушать
+    document.body.classList.add('no-hover');
+    document.body.setAttribute('data-screen', screen.type);
+    document.body.setAttribute('data-expr', String(expr));
+    document.body.setAttribute('data-node', screen.id || '');
+    var s = screen;
+    if (s.type === 'intro') {
+      panelScreen([
+        h('p', { 'class': 'main-text', text: SC.intro[s.i] }),
+        nextButton()
+      ]);
+    } else if (s.type === 'node') {
+      var node = E.NODE[s.id];
+      panelScreen([
+        h('p', { 'class': 'label', text: sessionLabel(s.id) + '. ' + node.title }),
+        h('p', { 'class': 'main-text', text: E.situation(s.id, st) }),
+        h('ul', { 'class': 'options' }, node.options.map(function (o, i) {
+          return h('li', null, [h('button', {
+            'class': 'option', type: 'button', 'data-letter': o.letter,
+            onclick: function () { pick(i); }
+          }, [h('span', { 'class': 'letter', text: o.letter }), h('span', { text: o.text })])]);
+        }))
+      ]);
+    } else if (s.type === 'reply') {
+      var n2 = E.NODE[s.id];
+      var o2 = n2.options[s.idx];
+      panelScreen([
+        h('p', { 'class': 'label', text: sessionLabel(s.id) + '. ' + n2.title }),
+        h('p', { 'class': 'chosen' }, [h('span', { 'class': 'letter-inline', text: o2.letter + '. ' }), o2.text]),
+        h('p', { 'class': 'main-text', text: s.reply }),
+        nextButton()
+      ]);
+    } else if (s.type === 'walkout') {
+      panelScreen([
+        h('p', { 'class': 'label', text: UI.session1 }),
+        h('p', { 'class': 'main-text', text: SC.walkout.text }),
+        nextButton()
+      ]);
+    } else if (s.type === 'session2') {
+      panelScreen([
+        h('p', { 'class': 'label', text: UI.session2 }),
+        h('p', { 'class': 'main-text', text: SC.session2_entry[st.session2.key].text }),
+        nextButton()
+      ]);
+    } else if (s.type === 'epilogue') {
+      var end = SC.endings[E.ending(st)];
+      panelScreen([
+        h('p', { 'class': 'label', text: UI.epilogue }),
+        h('p', { 'class': 'ending-title', text: end.title }),
+        h('p', { 'class': 'main-text', text: end.text }),
+        nextButton(UI.debrief)
+      ]);
+    } else if (s.type === 'debrief') {
+      renderDebrief();
+    }
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- Екран розбору ----------
+
+  function signed(v) {
+    return v > 0 ? '+' + v : String(v);
+  }
+
+  function scaleRows(before, after) {
+    var rows = [];
+    ['D', 'Z', 'S'].forEach(function (k) {
+      var d = after[k] - before[k];
+      var cls = d === 0 ? 'same' : ((k === 'D' ? d > 0 : d < 0) ? 'up' : 'down');
+      rows.push(h('span', { 'class': 'name', text: SCALE_NAME[k] }));
+      rows.push(h('span', { 'class': cls, text: before[k] + ' → ' + after[k] + (d ? '  (' + signed(d) + ')' : '') }));
+    });
+    return h('div', { 'class': 'scales' }, rows);
+  }
+
+  function flagsText(list) {
+    var names = list.map(function (f) {
+      return (FLAG_TEXT[f] || f) + (E.COUNTERS[f] ? ' (' + st.flags[f] + ')' : '');
+    });
+    return names.join(', ');
+  }
+
+  // Точки графіка: старт, кожен вибір, вхід у другу сесію
+  function chartPoints() {
+    var pts = [{ label: 'старт', v: SC.start }];
+    st.log.forEach(function (e) {
+      pts.push({ label: e.node + ' ' + e.letter, v: e.after });
+      if (st.session2 && e === lastSessionOneEntry()) {
+        pts.push({ label: 'тиждень', v: st.session2.after });
+      }
+    });
+    return pts;
+  }
+
+  function lastSessionOneEntry() {
+    var last = null;
+    st.log.forEach(function (e) { if (E.NODE[e.node].session === 1) last = e; });
+    return last;
+  }
+
+  function renderChart(box) {
+    var pts = chartPoints();
+    var W = Math.max(600, box.clientWidth - 40), H = 230, padL = 48, padR = 36, padT = 12, padB = 12;
+    var x = function (i) { return padL + i * (W - padL - padR) / (pts.length - 1); };
+    var y = function (v) { return padT + (10 - v) * (H - padT - padB) / 10; };
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('width', W);
+    svg.setAttribute('height', H);
+    svg.setAttribute('aria-hidden', 'true');
+    [0, 5, 10].forEach(function (v) {
+      var l = document.createElementNS(ns, 'line');
+      l.setAttribute('x1', padL); l.setAttribute('x2', W - padR);
+      l.setAttribute('y1', y(v)); l.setAttribute('y2', y(v));
+      l.setAttribute('stroke', '#d3cec6'); l.setAttribute('stroke-width', v === 5 ? 1 : 1.5);
+      if (v === 5) l.setAttribute('stroke-dasharray', '4 6');
+      svg.appendChild(l);
+    });
+    [['D', '#2c6db3'], ['Z', '#b8392b'], ['S', '#7a4aa6']].forEach(function (k) {
+      var p = document.createElementNS(ns, 'polyline');
+      p.setAttribute('points', pts.map(function (pt, i) { return x(i) + ',' + y(pt.v[k[0]]); }).join(' '));
+      p.setAttribute('fill', 'none'); p.setAttribute('stroke', k[1]); p.setAttribute('stroke-width', 3);
+      p.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(p);
+      pts.forEach(function (pt, i) {
+        var c = document.createElementNS(ns, 'circle');
+        c.setAttribute('cx', x(i)); c.setAttribute('cy', y(pt.v[k[0]])); c.setAttribute('r', 4.5);
+        c.setAttribute('fill', k[1]);
+        svg.appendChild(c);
+      });
+    });
+    var labels = h('div', { 'class': 'chart-labels' }, pts.map(function (pt, i) {
+      var s = h('span', { text: pt.label });
+      s.style.left = x(i) + 'px';
+      return s;
+    }));
+    labels.style.width = W + 'px';
+    var plot = h('div', { 'class': 'chart-plot' }, [svg].concat([0, 5, 10].map(function (v) {
+      var l = h('span', { 'class': 'y-label', text: String(v) });
+      l.style.top = y(v) + 'px';
+      return l;
+    })));
+    box.appendChild(plot);
+    box.appendChild(labels);
+  }
+
+  function stepRow(e, i) {
+    var node = E.NODE[e.node];
+    var opt = node.options[e.idx];
+    var flags = e.flags.length ? h('p', { 'class': 'flags', text: 'Прапорці: ' + flagsText(e.flags) }) : null;
+    return h('div', { 'class': 'step', 'data-step': String(i + 1) }, [
+      faceEl(e.expr, 'thumb'),
+      h('div', null, [
+        h('p', { 'class': 'node-name', text: e.node + '. ' + node.title }),
+        h('p', { 'class': 'opt' }, [h('span', { 'class': 'letter-inline', text: opt.letter }), opt.text]),
+        h('p', { 'class': 'why' }, [h('b', { text: 'Розбір. ' }), opt.debrief]),
+        flags
+      ]),
+      scaleRows(e.before, e.after)
+    ]);
+  }
+
+  function eventRow(exprN, text, before, after) {
+    return h('div', { 'class': 'step event' }, [
+      faceEl(exprN, 'thumb'),
+      h('div', null, [h('p', { 'class': 'main-text', text: text }), before ? scaleRows(before, after) : null])
+    ]);
+  }
+
+  // Які фінали дала б зміна одного вибору. Подальші вибори лишаються ті самі,
+  // а в умовних вузлах, яких не було на цьому шляху, перебираються всі варіанти.
+  function alternatives() {
+    var letters = {};
+    st.log.forEach(function (e) { letters[e.node] = e.idx; });
+    var found = {};
+    function finish(s, cur, change) {
+      while (cur !== null) {
+        if (!(cur in letters)) {
+          for (var j = 0; j < 3; j++) {
+            var s2 = E.cloneState(s);
+            finish(s2, E.step(s2, cur, j).next, change);
+          }
+          return;
+        }
+        cur = E.step(s, cur, letters[cur]).next;
+      }
+      var end = E.ending(s);
+      if (!found[end]) found[end] = change;
+    }
+    st.log.forEach(function (e, i) {
+      for (var j = 0; j < 3; j++) {
+        if (j === e.idx) continue;
+        var s = E.newState();
+        var cur = 'N1';
+        for (var k = 0; k < i; k++) cur = E.step(s, cur, st.log[k].idx).next;
+        var nx = E.step(s, cur, j).next;
+        finish(s, nx, { node: e.node, from: e.letter, to: E.NODE[e.node].options[j].letter });
+      }
+    });
+    return found;
+  }
+
+  function renderDebrief() {
+    app.innerHTML = '';
+    var endKey = E.ending(st);
+    var end = SC.endings[endKey];
+    var r = E.risk(st);
+    var root = h('div', { 'class': 'debrief' });
+    app.appendChild(root);
+
+    root.appendChild(h('h1', { text: 'Розбір' }));
+    root.appendChild(h('div', { 'class': 'summary' }, [
+      faceEl(end.expr, 'thumb'),
+      h('div', null, [
+        h('p', { 'class': 'ending-title', text: endKey + '. ' + end.title }),
+        h('p', { 'class': 'main-text', text: 'Індекс ризику R = ' + r + '. Довіра ' + st.D +
+          ', збудження ' + st.Z + ', сором ' + st.S + '. Фінал визначено так: ' + ENDING_RULE[endKey] + '.' })
+      ])
+    ]));
+
+    root.appendChild(h('h2', { text: 'Шкали' }));
+    var chart = h('div', { 'class': 'chart-box' }, [
+      h('div', { 'class': 'legend' }, [
+        h('span', { 'class': 'ld' }, [h('b', { text: 'Довіра' })]),
+        h('span', { 'class': 'lz' }, [h('b', { text: 'Збудження' })]),
+        h('span', { 'class': 'ls' }, [h('b', { text: 'Сором' })])
+      ])
+    ]);
+    root.appendChild(chart);
+    renderChart(chart);
+
+    root.appendChild(h('h2', { text: 'Хронологія' }));
+    var steps = h('div', { 'class': 'steps' });
+    root.appendChild(steps);
+    var lastS1 = lastSessionOneEntry();
+    st.log.forEach(function (e, i) {
+      if (e.node === 'FLASH') {
+        steps.appendChild(eventRow(E.NODE.FLASH.entry_expr, E.NODE.FLASH.situation));
+      }
+      steps.appendChild(stepRow(e, i));
+      if (e === lastS1 && st.session2) {
+        if (st.flags.walkout) steps.appendChild(eventRow(SC.walkout.expr, SC.walkout.text));
+        var s2 = st.session2;
+        steps.appendChild(eventRow(e.expr,
+          'Перерахунок за тиждень, потім вхід у другу зустріч. ' + SC.session2_entry[s2.key].text,
+          s2.atEnd, s2.after));
+      }
+    });
+
+    root.appendChild(h('h2', { text: 'Прапорці' }));
+    var set = Object.keys(st.flags).filter(function (f) { return st.flags[f]; });
+    root.appendChild(set.length
+      ? h('ul', { 'class': 'flag-list' }, set.map(function (f) {
+        return h('li', null, [
+          (FLAG_TEXT[f] || f) + (E.COUNTERS[f] ? ': ' + st.flags[f] : ''),
+          FLAG_EFFECT[f] ? h('span', { 'class': 'effect', text: ' (' + FLAG_EFFECT[f] + ')' }) : null
+        ]);
+      }))
+      : h('p', { text: 'Жоден прапорець не спрацював.' }));
+
+    root.appendChild(h('h2', { text: 'Як склався індекс ризику R' }));
+    var terms = E.riskTerms(st);
+    var table = h('table', { 'class': 'terms' }, terms.map(function (t) {
+      return h('tr', { 'class': t.value === 0 ? 'zero' : '' }, [
+        h('td', { text: TERM_TEXT[t.key] }),
+        h('td', { 'class': 'num', text: signed(t.value) })
+      ]);
+    }).concat([h('tr', { 'class': 'total' }, [h('td', { text: 'R' }), h('td', { 'class': 'num', text: String(r) })])]));
+    root.appendChild(table);
+    root.appendChild(h('p', { text: 'Контакт із допомогою (контрольна зустріч, скерування або КПТ): ' +
+      (E.hasCare(st.flags) ? 'є' : 'немає') + '.' }));
+
+    root.appendChild(h('h2', { text: 'Інші можливі фінали' }));
+    var alt = alternatives();
+    root.appendChild(h('ul', { 'class': 'other-list' }, ['E1', 'E2', 'E3', 'E4', 'E5'].filter(function (k) {
+      return k !== endKey;
+    }).map(function (k) {
+      var c = alt[k];
+      var how = c ? 'Наприклад, якби в ' + c.node + ' обрали ' + c.to + ' замість ' + c.from + '.'
+        : 'Зміною лише одного вибору сюди не дійти.';
+      return h('li', null, [
+        h('span', { 'class': 'ending-name', text: k + '. ' + SC.endings[k].title + '. ' }),
+        'Умова: ' + ENDING_RULE[k] + '. ' + how
+      ]);
+    })));
+
+    root.appendChild(h('div', { 'class': 'restart' }, [
+      h('button', { 'class': 'btn', type: 'button', 'data-action': 'restart', text: UI.restart, onclick: reset })
+    ]));
+  }
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.repeat || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    var t = screen && screen.type;
+    if (t === 'node') {
+      var n = { '1': 0, '2': 1, '3': 2 }[ev.key];
+      if (n !== undefined) { ev.preventDefault(); pick(n); }
+    } else if (t === 'intro' || t === 'reply' || t === 'walkout' || t === 'session2' || t === 'epilogue') {
+      if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); advance(); }
+    }
+  });
+
+  document.addEventListener('mousemove', function () {
+    document.body.classList.remove('no-hover');
+  });
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    if (!screen || screen.type !== 'debrief') return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      var y = window.scrollY;
+      renderDebrief();
+      window.scrollTo(0, y);
+    }, 150);
+  });
+
+  reset();
+})();
+</script>
+</body>
+</html>
