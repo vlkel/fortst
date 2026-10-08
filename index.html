@@ -20,10 +20,11 @@
   // Тексти інтерфейсу (не зі сценарію)
   var UI = {
     next: 'Далі',
+    back: 'Назад',
     debrief: 'Розбір',
     restart: 'Почати знову',
     session1: 'Перша зустріч',
-    session2: 'Друга зустріч',
+    session2: 'Друга зустріч через тиждень',
     epilogue: 'Через місяць'
   };
 
@@ -105,8 +106,9 @@
 
   var SCALE_NAME = { D: 'Довіра', Z: 'Збудження', S: 'Сором' };
 
-  // Стан гри
-  var st, screen, expr, lastStep, queue;
+  // Стан гри. Кожен перехід кладе в history знімок усього стану (шкали, прапорці, журнал,
+  // вираз обличчя, черга екранів), тож «Назад» просто відновлює попередній знімок.
+  var st, screen, queue, history;
 
   function h(tag, attrs, children) {
     var el = document.createElement(tag);
@@ -131,45 +133,68 @@
     return E.NODE[nodeId].session === 1 ? UI.session1 : UI.session2;
   }
 
-  function reset() {
-    st = E.newState();
-    expr = 1;
-    lastStep = null;
-    queue = [];
-    go({ type: 'intro', i: 0 });
+  // Вираз обличчя на екрані: на вступі 1, у вузлі поточний вираз зі стану,
+  // на решті екранів той, що записано в самому екрані.
+  function screenExpr(s) {
+    if (s.type === 'intro') return 1;
+    if (s.type === 'node') return st.face;
+    if (s.type === 'epilogue' || s.type === 'debrief') return SC.endings[E.ending(st)].expr;
+    return s.face;
   }
 
-  function go(s) {
+  function snapshot() {
+    return JSON.parse(JSON.stringify({ st: st, screen: screen, queue: queue }));
+  }
+
+  function reset() {
+    st = E.newState();
+    queue = [];
+    history = [];
+    screen = { type: 'intro', i: 0 };
+    render();
+  }
+
+  function show(s) {
     screen = s;
-    if (s.type === 'node' && s.id === 'FLASH') expr = E.NODE.FLASH.entry_expr;
-    if (s.type === 'walkout') expr = SC.walkout.expr;
-    if (s.type === 'epilogue') expr = SC.endings[E.ending(st)].expr;
+    render();
+  }
+
+  function canGoBack() {
+    return history.length > 0;
+  }
+
+  function back() {
+    if (!canGoBack()) return;
+    var snap = history.pop();
+    st = snap.st;
+    screen = snap.screen;
+    queue = snap.queue;
     render();
   }
 
   // Що показати після екрана з кнопкою «Далі»
   function advance() {
     var s = screen;
+    history.push(snapshot());
     if (s.type === 'intro') {
-      if (s.i + 1 < SC.intro.length) go({ type: 'intro', i: s.i + 1 });
-      else go({ type: 'node', id: 'N1' });
+      if (s.i + 1 < SC.intro.length) show({ type: 'intro', i: s.i + 1 });
+      else show({ type: 'node', id: 'N1' });
     } else if (s.type === 'reply' || s.type === 'walkout' || s.type === 'session2') {
-      go(queue.shift());
+      show(queue.shift());
     } else if (s.type === 'epilogue') {
-      go({ type: 'debrief' });
+      show({ type: 'debrief' });
     }
   }
 
   function pick(idx) {
     var id = screen.id;
+    history.push(snapshot());
     var res = E.step(st, id, idx);
-    lastStep = res;
-    expr = res.expr;
     queue = [];
-    if (res.walkout) queue.push({ type: 'walkout' });
-    if (res.session2) queue.push({ type: 'session2' });
+    if (res.walkout) queue.push({ type: 'walkout', face: res.walkoutFace });
+    if (res.session2) queue.push({ type: 'session2', face: res.session2Face });
     queue.push(res.next === null ? { type: 'epilogue' } : { type: 'node', id: res.next });
-    go({ type: 'reply', id: id, idx: idx, reply: res.reply });
+    show({ type: 'reply', id: id, idx: idx, reply: res.reply, face: res.expr });
   }
 
   function nextButton(text) {
@@ -178,18 +203,46 @@
     ]);
   }
 
-  function panelScreen(children) {
+  function backButton() {
+    return h('button', { 'class': 'btn-back', type: 'button', 'data-action': 'back', onclick: back }, [
+      h('span', { 'class': 'arrow', 'aria-hidden': 'true', text: '←' }), UI.back
+    ]);
+  }
+
+  // Межі висоти фото: частка висоти вікна і мінімум, нижче якого фото не зменшується
+  var PHOTO_MAX = 0.4, PHOTO_MIN = 110;
+
+  function panelScreen(children, expr) {
     app.innerHTML = '';
     var panel = h('div', { 'class': 'panel' }, children);
-    app.appendChild(h('div', { 'class': 'stage' }, [
-      h('div', { 'class': 'face-area' }, [faceEl(expr)]),
-      h('div', { 'class': 'panel-wrap' }, [panel])
-    ]));
+    var photo = h('div', { 'class': 'photo' }, [faceEl(expr)]);
+    var stage = h('div', { 'class': 'stage' }, [
+      canGoBack() ? backButton() : null,
+      h('div', { 'class': 'photo-area' }, [photo]),
+      panel
+    ]);
+    app.appendChild(stage);
+    fitPhoto();
+  }
+
+  // Усе має вміститися у вікно: якщо тексту багато, зменшується фото, а не шрифт
+  function fitPhoto() {
+    var stage = app.querySelector('.stage');
+    var photo = app.querySelector('.photo');
+    if (!stage || !photo) return;
+    var vh = window.innerHeight;
+    var max = Math.round(vh * PHOTO_MAX);
+    photo.style.height = max + 'px';
+    var extra = stage.scrollHeight - vh;
+    var hgt = extra > 0 ? Math.max(PHOTO_MIN, max - extra) : max;
+    photo.style.height = hgt + 'px';
+    document.body.setAttribute('data-photo', String(hgt));
   }
 
   function render() {
     // Варіант під нерухомим курсором не підсвічується, доки мишу не зрушать
     document.body.classList.add('no-hover');
+    var expr = screenExpr(screen);
     document.body.setAttribute('data-screen', screen.type);
     document.body.setAttribute('data-expr', String(expr));
     document.body.setAttribute('data-node', screen.id || '');
@@ -198,40 +251,42 @@
       panelScreen([
         h('p', { 'class': 'main-text', text: SC.intro[s.i] }),
         nextButton()
-      ]);
+      ], expr);
     } else if (s.type === 'node') {
       var node = E.NODE[s.id];
+      var sit = E.situation(s.id, st);
       panelScreen([
-        h('p', { 'class': 'label', text: sessionLabel(s.id) + '. ' + node.title }),
-        h('p', { 'class': 'main-text', text: E.situation(s.id, st) }),
+        h('p', { 'class': 'label', text: sessionLabel(s.id) }),
+        h('p', { 'class': 'narration', text: node.narration }),
+        sit ? h('p', { 'class': 'main-text situation', text: sit }) : null,
         h('ul', { 'class': 'options' }, node.options.map(function (o, i) {
           return h('li', null, [h('button', {
             'class': 'option', type: 'button', 'data-letter': o.letter,
             onclick: function () { pick(i); }
           }, [h('span', { 'class': 'letter', text: o.letter }), h('span', { text: o.text })])]);
         }))
-      ]);
+      ], expr);
     } else if (s.type === 'reply') {
       var n2 = E.NODE[s.id];
       var o2 = n2.options[s.idx];
       panelScreen([
-        h('p', { 'class': 'label', text: sessionLabel(s.id) + '. ' + n2.title }),
+        h('p', { 'class': 'label', text: sessionLabel(s.id) }),
         h('p', { 'class': 'chosen' }, [h('span', { 'class': 'letter-inline', text: o2.letter + '. ' }), o2.text]),
         h('p', { 'class': 'main-text', text: s.reply }),
         nextButton()
-      ]);
+      ], expr);
     } else if (s.type === 'walkout') {
       panelScreen([
         h('p', { 'class': 'label', text: UI.session1 }),
         h('p', { 'class': 'main-text', text: SC.walkout.text }),
         nextButton()
-      ]);
+      ], expr);
     } else if (s.type === 'session2') {
       panelScreen([
         h('p', { 'class': 'label', text: UI.session2 }),
         h('p', { 'class': 'main-text', text: SC.session2_entry[st.session2.key].text }),
         nextButton()
-      ]);
+      ], expr);
     } else if (s.type === 'epilogue') {
       var end = SC.endings[E.ending(st)];
       panelScreen([
@@ -239,7 +294,7 @@
         h('p', { 'class': 'ending-title', text: end.title }),
         h('p', { 'class': 'main-text', text: end.text }),
         nextButton(UI.debrief)
-      ]);
+      ], expr);
     } else if (s.type === 'debrief') {
       renderDebrief();
     }
@@ -399,6 +454,7 @@
     var root = h('div', { 'class': 'debrief' });
     app.appendChild(root);
 
+    root.appendChild(h('div', { 'class': 'debrief-top' }, [backButton()]));
     root.appendChild(h('h1', { text: 'Розбір' }));
     root.appendChild(h('div', { 'class': 'summary' }, [
       faceEl(end.expr, 'thumb'),
@@ -430,9 +486,9 @@
       }
       steps.appendChild(stepRow(e, i));
       if (e === lastS1 && st.session2) {
-        if (st.flags.walkout) steps.appendChild(eventRow(SC.walkout.expr, SC.walkout.text));
+        if (st.flags.walkout) steps.appendChild(eventRow(st.walkoutFace, SC.walkout.text));
         var s2 = st.session2;
-        steps.appendChild(eventRow(e.expr,
+        steps.appendChild(eventRow(s2.face,
           'Перерахунок за тиждень, потім вхід у другу зустріч. ' + SC.session2_entry[s2.key].text,
           s2.atEnd, s2.after));
       }
@@ -476,6 +532,7 @@
     })));
 
     root.appendChild(h('div', { 'class': 'restart' }, [
+      backButton(),
       h('button', { 'class': 'btn', type: 'button', 'data-action': 'restart', text: UI.restart, onclick: reset })
     ]));
   }
@@ -483,6 +540,11 @@
   document.addEventListener('keydown', function (ev) {
     if (ev.repeat || ev.altKey || ev.ctrlKey || ev.metaKey) return;
     var t = screen && screen.type;
+    if (ev.key === 'Backspace') {
+      ev.preventDefault();
+      back();
+      return;
+    }
     if (t === 'node') {
       var n = { '1': 0, '2': 1, '3': 2 }[ev.key];
       if (n !== undefined) { ev.preventDefault(); pick(n); }
@@ -497,7 +559,8 @@
 
   var resizeTimer;
   window.addEventListener('resize', function () {
-    if (!screen || screen.type !== 'debrief') return;
+    if (!screen) return;
+    if (screen.type !== 'debrief') { fitPhoto(); return; }
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
       var y = window.scrollY;
@@ -505,6 +568,13 @@
       window.scrollTo(0, y);
     }, 150);
   });
+
+  // Для автоматичних тестів: знімок стану без доступу до замикання
+  window.__novel = {
+    state: function () { return JSON.parse(JSON.stringify(st)); },
+    screen: function () { return JSON.parse(JSON.stringify(screen)); },
+    historyLength: function () { return history.length; }
+  };
 
   reset();
 })();

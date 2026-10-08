@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-// Тест рушія: 25 еталонних шляхів із reference/golden_paths.json
-// і повний перебір усіх шляхів зі звіркою з розділом 10 docs/spec.md.
+// Тест рушія: 25 еталонних шляхів із reference/golden_paths.json (фінал, шкали, вирази),
+// повний перебір усіх шляхів зі звіркою з розділом 10 docs/spec.md і з графом виразів,
+// і звірка кожного шляху з еталоном reference/engine.py (через tools/enumerate.py, потрібен python3).
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 const { createEngine } = require('../engine.js');
 
 const root = path.join(__dirname, '..');
@@ -29,11 +31,21 @@ golden.forEach((g, i) => {
     return;
   }
   const st = res.state;
-  const ok = res.ending === g.ending && st.D === g.final.D && st.Z === g.final.Z && st.S === g.final.S &&
+  let ok = res.ending === g.ending && st.D === g.final.D && st.Z === g.final.Z && st.S === g.final.S &&
     (g.risk === undefined || res.risk === g.risk);
-  if (ok) passed++;
-  else fail('шлях ' + (i + 1) + ' ' + g.path.join(' ') + ': очікувалось ' + g.ending + ' ' + JSON.stringify(g.final) +
+  if (!ok) fail('шлях ' + (i + 1) + ' ' + g.path.join(' ') + ': очікувалось ' + g.ending + ' ' + JSON.stringify(g.final) +
     ' R=' + g.risk + ', отримано ' + res.ending + ' ' + JSON.stringify({ D: st.D, Z: st.Z, S: st.S }) + ' R=' + res.risk);
+  (g.faces || []).forEach((want, k) => {
+    const got = res.faces[k];
+    ['after_choice', 'walkout_scene', 'next_node', 'entry_face'].forEach(key => {
+      if (got[key] !== want[key]) {
+        ok = false;
+        fail('шлях ' + (i + 1) + ', крок ' + (k + 1) + ' (' + g.path[k] + '): ' + key + ' ' + got[key] + ', очікувалось ' + want[key]);
+      }
+    });
+  });
+  if (!g.faces) fail('шлях ' + (i + 1) + ': у golden_paths.json немає виразів');
+  if (ok) passed++;
 });
 console.log('  збіглося ' + passed + ' з ' + golden.length);
 
@@ -48,10 +60,19 @@ let wFlash = 0, wN6B = 0;
 const bySub = {};      // кількість неоптимальних -> {E1: кількість шляхів, ...}
 const optionSeen = new Set();
 const exprSeen = new Set();
+const jsLines = [];
+let graphChecks = 0;
 
-function walk(st, cur, prob, sub, seen) {
+// Перехід виразу з a в b має бути дозволений графом (або це затверджений виняток)
+function checkMove(a, b, where) {
+  graphChecks++;
+  if (!E.isAllowed(a, b)) fail('перехід ' + a + ' → ' + b + ' поза графом: ' + where);
+}
+
+function walk(st, cur, prob, sub, seen, trail, faces) {
   if (cur === null) {
     total++;
+    jsLines.push(trail.join(' ') + '|' + E.ending(st) + '|' + st.D + ',' + st.Z + ',' + st.S + '|' + E.risk(st) + '|' + faces.join(' '));
     const e = E.ending(st);
     count[e]++;
     weighted[e] += prob;
@@ -63,20 +84,35 @@ function walk(st, cur, prob, sub, seen) {
   }
   if (cur === 'FLASH') exprSeen.add(E.NODE.FLASH.entry_expr);
   const node = E.NODE[cur];
+  const entryFace = st.face;
   // У N9 оптимальні обидва варіанти А і В (у специфікації «А або В залежно від стану»).
   const isBest = letter => cur === 'N9' ? (letter === 'А' || letter === 'В') : letter === OPT[cur];
   for (let i = 0; i < node.options.length; i++) {
     const s2 = E.cloneState(st);
     const r = E.step(s2, cur, i);
-    optionSeen.add(cur + node.options[i].letter);
+    const label = cur + node.options[i].letter;
+    const where = trail.concat(label).join(' ');
+    optionSeen.add(label);
     exprSeen.add(r.expr);
-    if (r.walkout) exprSeen.add(scenario.walkout.expr);
+    checkMove(entryFace, r.expr, where + ', реакція');
+    let last = r.expr;
+    if (r.walkout) {
+      exprSeen.add(r.walkoutFace);
+      checkMove(last, r.walkoutFace, where + ', сцена обриву');
+      last = r.walkoutFace;
+    }
+    // Винятки: вхід у FLASH (одразу 4) і вхід у другу сесію (вираз зі стану)
+    if (r.next !== null && r.next !== 'FLASH' && !r.session2) checkMove(last, r.entryFace, where + ', вхід у ' + r.next);
+    if (r.session2 && r.entryFace !== r.session2Face) fail('вхід у N9 не з виразом другої сесії: ' + where);
+    if (r.next === 'FLASH' && r.entryFace !== 4) fail('вхід у FLASH не 4: ' + where);
     const seen2 = Object.assign({}, seen);
     seen2[cur] = true;
-    walk(s2, r.next, prob / node.options.length, sub + (isBest(node.options[i].letter) ? 0 : 1), seen2);
+    const f = r.expr + '/' + (r.walkout ? r.walkoutFace : '-') + '/' + (r.entryFace === null ? '-' : r.entryFace);
+    walk(s2, r.next, prob / node.options.length, sub + (isBest(node.options[i].letter) ? 0 : 1), seen2,
+      trail.concat(label), faces.concat(f));
   }
 }
-walk(E.newState(), 'N1', 1, 0, {});
+walk(E.newState(), 'N1', 1, 0, {}, [], []);
 ENDS.forEach(e => exprSeen.add(scenario.endings[e].expr));
 
 const pct = x => Math.round(x * 100);
@@ -124,6 +160,28 @@ for (let k = 0; k <= 4; k++) {
     return e + ' ' + got + '%' + (got !== want ? ' (спец. ' + want + '%)' : '');
   });
   console.log('    ' + k + ': ' + cells.join(', '));
+}
+
+console.log('  переходів виразів перевірено на граф: ' + graphChecks + ' (винятки: вхід у FLASH, вхід у другу сесію, епілог)');
+
+// 3. Звірка з еталоном на Python
+console.log('\n3. Звірка кожного шляху з reference/engine.py');
+const py = spawnSync('python3', [path.join(__dirname, 'enumerate.py')], { encoding: 'utf8', maxBuffer: 1 << 30 });
+if (py.error || py.status !== 0) {
+  fail('не вдалося запустити python3 tools/enumerate.py: ' + (py.error ? py.error.message : py.stderr));
+} else {
+  const pyLines = py.stdout.split('\n').filter(Boolean);
+  console.log('  шляхів у Python: ' + pyLines.length + ', у JS: ' + jsLines.length);
+  if (pyLines.length !== jsLines.length) fail('різна кількість шляхів');
+  let diff = 0;
+  for (let k = 0; k < Math.max(pyLines.length, jsLines.length); k++) {
+    if (pyLines[k] !== jsLines[k]) {
+      if (diff < 5) fail('розбіжність у шляху ' + (k + 1) + ':\n    py ' + pyLines[k] + '\n    js ' + jsLines[k]);
+      diff++;
+    }
+  }
+  console.log('  розбіжностей (фінал, шкали, R, вирази після вибору, у сцені обриву, на вході у вузол): ' + diff);
+  if (diff) fail('розбіжностей з Python: ' + diff);
 }
 
 console.log('\n' + (failures ? 'НЕ ПРОЙДЕНО: помилок ' + failures : 'УСЕ ПРОЙДЕНО'));
