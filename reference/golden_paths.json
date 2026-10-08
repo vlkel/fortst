@@ -19,7 +19,75 @@
    "Z": 2,
    "S": 7
   },
-  "risk": 4
+  "risk": 4,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -41,7 +109,75 @@
    "Z": 1,
    "S": 10
   },
-  "risk": 3
+  "risk": 3,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": 2,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -63,7 +199,75 @@
    "Z": 4,
    "S": 10
   },
-  "risk": 7
+  "risk": 7,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -85,7 +289,75 @@
    "Z": 0,
    "S": 8
   },
-  "risk": 1
+  "risk": 1,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -108,7 +380,81 @@
    "Z": 4,
    "S": 9
   },
-  "risk": 6
+  "risk": 6,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -130,7 +476,75 @@
    "Z": 5,
    "S": 8
   },
-  "risk": 9
+  "risk": 9,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -153,7 +567,81 @@
    "Z": 2,
    "S": 10
   },
-  "risk": 3
+  "risk": 3,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -175,7 +663,75 @@
    "Z": 3,
    "S": 10
   },
-  "risk": 6
+  "risk": 6,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -197,7 +753,75 @@
    "Z": 3,
    "S": 10
   },
-  "risk": 6
+  "risk": 6,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -220,7 +844,81 @@
    "Z": 4,
    "S": 10
   },
-  "risk": 6
+  "risk": 6,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -242,7 +940,75 @@
    "Z": 3,
    "S": 6
   },
-  "risk": 5
+  "risk": 5,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 10
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -264,7 +1030,75 @@
    "Z": 4,
    "S": 4
   },
-  "risk": 7
+  "risk": 7,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -286,7 +1120,75 @@
    "Z": 0,
    "S": 9
   },
-  "risk": 1
+  "risk": 1,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -305,7 +1207,57 @@
    "Z": 8,
    "S": 9
   },
-  "risk": 15
+  "risk": 15,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 5,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": 2,
+    "next_node": "N9",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -328,7 +1280,81 @@
    "Z": 2,
    "S": 9
   },
-  "risk": 0
+  "risk": 0,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6B",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -350,7 +1376,75 @@
    "Z": 1,
    "S": 7
   },
-  "risk": 4
+  "risk": 4,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -368,7 +1462,51 @@
    "Z": 9,
    "S": 6
   },
-  "risk": 14
+  "risk": 14,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 5,
+    "walkout_scene": 2,
+    "next_node": "N9",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -391,7 +1529,81 @@
    "Z": 7,
    "S": 10
   },
-  "risk": 13
+  "risk": 13,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -414,7 +1626,81 @@
    "Z": 2,
    "S": 3
   },
-  "risk": 0
+  "risk": 0,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6B",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -436,7 +1722,75 @@
    "Z": 0,
    "S": 10
   },
-  "risk": 2
+  "risk": 2,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": 2,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -458,7 +1812,75 @@
    "Z": 4,
    "S": 5
   },
-  "risk": 9
+  "risk": 9,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -480,7 +1902,75 @@
    "Z": 3,
    "S": 9
   },
-  "risk": 5
+  "risk": 5,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 9
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -503,7 +1993,81 @@
    "Z": 2,
    "S": 7
   },
-  "risk": 1
+  "risk": 1,
+  "faces": [
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 7,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 4
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -525,7 +2089,75 @@
    "Z": 4,
    "S": 6
   },
-  "risk": 7
+  "risk": 7,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 6,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  },
  {
   "path": [
@@ -547,6 +2179,74 @@
    "Z": 4,
    "S": 6
   },
-  "risk": 10
+  "risk": 10,
+  "faces": [
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N2",
+    "entry_face": 8
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 6
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 8,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 2
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N11",
+    "entry_face": 1
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": null,
+    "entry_face": null
+   }
+  ]
  }
 ]

@@ -41,21 +41,95 @@ def apply(eff, st):
         st["flags"][f] = st["flags"].get(f, 0) + 1
 
 
+# Граф дозволених переходів виразів за один екран (залишитися в тому самому можна завжди)
+GRAPH = {
+    1: {2, 4, 6, 8, 9},
+    2: {1, 3, 4, 5, 6, 8, 9},
+    3: {1, 2, 6},
+    4: {1, 2, 5, 6, 8, 9},
+    5: {2, 4, 6, 8, 9},
+    6: {1, 2, 7, 8, 9},
+    7: {1, 6, 8, 9},
+    8: {1, 2, 4, 6, 9},
+    9: {1, 2, 6, 7, 8, 10},
+    10: {1, 2, 6, 7, 9},
+}
+# Якщо до цілі кілька рівноцінних проміжних кроків: якому віддати перевагу
+PREFER = {
+    7: [6, 9, 8],   # до сліз: через погляд униз, а не через полегшення
+    3: [2, 6],      # до гніву: через роздратування
+    5: [2, 4],      # до страху: через напругу
+    10: [9, 7],     # до довіри: через полегшення
+}
+# Інтенсивність для вибору між рівноцінними проміжними кроками (менша краще)
+INTENSITY = {9: 1, 10: 1, 1: 2, 8: 2, 2: 3, 6: 3, 4: 4, 7: 4, 3: 5, 5: 5}
+
+
+def _dist_from(src):
+    """Відстані в графі від src до всіх вузлів (BFS)."""
+    dist, frontier = {src: 0}, [src]
+    while frontier:
+        nxt = []
+        for u in frontier:
+            for v in GRAPH[u]:
+                if v not in dist:
+                    dist[v] = dist[u] + 1
+                    nxt.append(v)
+        frontier = nxt
+    return dist
+
+
+DIST = {u: _dist_from(u) for u in GRAPH}
+
+
+def step_toward(cur, target):
+    """Наступний вираз дорогою від cur до target: один крок графа."""
+    if cur == target:
+        return cur
+    cands = [v for v in GRAPH[cur] if DIST[v][target] == DIST[cur][target] - 1]
+    pref = PREFER.get(target, [])
+    return min(cands, key=lambda v: (pref.index(v) if v in pref else len(pref), INTENSITY[v], v))
+
+
+def resolve_expr(spec, st):
+    """Ціль виразу: число або {"if": умова, "then": a, "else": b} за станом після вибору."""
+    if isinstance(spec, dict):
+        return spec["then"] if check(spec["if"], st) else spec["else"]
+    return spec
+
+
+def target_expression(st, before, opt, branch=None):
+    """Цільовий вираз репліки: авторський, з урахуванням гілки умови варіанта."""
+    if branch is not None and "expr_then" in opt:
+        return resolve_expr(opt["expr_then"] if branch else opt["expr_else"], st)
+    if "expr" in opt:
+        return resolve_expr(opt["expr"], st)
+    return expression(st, before, opt, None)
+
+
+def session_entry_expression(st):
+    """Вираз на вході в другу сесію: зі стану через тиждень, без пам'яті про попередній."""
+    if st["Z"] >= 7: return 8          # «Гірше. Але працюю.» темні кола
+    if st["Z"] >= 4: return 6 if st["S"] >= 8 else 1
+    return 10 if st["D"] >= 6 else 1
+
+
 def expression(st, before, opt, node):
-    """Правила виразу обличчя, за пріоритетом."""
+    """Правила цільового виразу обличчя, за пріоритетом."""
     if opt is not None and "expr" in opt:
         return opt["expr"]
     D, Z, Sh = st["D"], st["Z"], st["S"]
     dD, dZ = D - before["D"], Z - before["Z"]
-    if Z >= 9: return 5
+    if Z >= 9 and st.get("session", 1) == 1: return 5   # паніка лише в гострій фазі
+    if Z >= 9: return 2
     if dD <= -2: return 3
     if Sh >= 8: return 6
     if Z >= 7: return 2
     if D >= 7 and Z <= 4: return 10
     if dZ < 0 and D >= 5: return 9
     if Z <= 3 and D < 5: return 8
-    if D >= 5: return 7
-    return 1
+    if D >= 6 and Z <= 5: return 10
+    return 1   # сльози (7) лише як ручний вираз у репліках про втрату
 
 
 def choose(st, node_id, idx):
@@ -65,12 +139,16 @@ def choose(st, node_id, idx):
     before = {k: st[k] for k in "DZS"}
     reply = opt.get("reply")
     apply(opt.get("effects", {}), st)
+    ok = None
     if "cond" in opt:
         ok = check(opt["cond"]["if"], {**st, **before, "flags": st["flags"]})
         apply(opt["cond"]["then"] if ok else opt["cond"]["else"], st)
         reply = opt.get("reply_then" if ok else "reply_else", reply)
     st["log"].append((node_id, opt["letter"], dict(before), {k: st[k] for k in "DZS"}))
-    return reply, expression(st, before, opt, node)
+    target = target_expression(st, before, opt, ok)
+    st["last_target"] = target
+    st["face"] = step_toward(st["face"], target)
+    return reply, st["face"]
 
 
 def between_sessions(st):
@@ -108,6 +186,7 @@ def start_session2(st):
     key = "plan" if f.get("plan") and not f.get("walkout") else "resent"
     apply(S.SESSION2_ENTRY[key]["effects"], st)
     st["D"] = max(st["D"], 1)
+    st["face"] = session_entry_expression(st)   # минув тиждень: вираз зі стану, без пам'яті
     return "N9"
 
 
@@ -127,18 +206,29 @@ def ending(st):
 
 
 def new_state():
-    return {**copy.deepcopy(S.START), "flags": {}, "log": [], "path": []}
+    return {**copy.deepcopy(S.START), "flags": {}, "log": [], "path": [], "face": 1}
 
 
 def next_node(st, cur):
+    """Маршрутизація після вибору у вузлі cur плюс крок обличчя до виразу ситуації нового вузла."""
+    nxt = _route(st, cur)
+    if nxt is not None and "sit_expr" in NODE[nxt]:
+        st["face"] = step_toward(st["face"], NODE[nxt]["sit_expr"])
+    return nxt
+
+
+def _route(st, cur):
     """Маршрутизація після вибору у вузлі cur. None = епілог."""
     f = st["flags"]
     if st["session"] == 1 and st["D"] <= 0:
         f["walkout"] = True
+        st["face"] = step_toward(st["face"], S.WALKOUT["expr"])   # сцена обриву
+        st["walkout_face"] = st["face"]
         return start_session2(st)
     if cur in FLASH_FROM and not f.get("flash_done") and st["Z"] >= 8:
         f["flash_done"] = True
         st["resume"] = cur
+        st["face"] = NODE["FLASH"]["entry_expr"]   # інтрузія раптова: поза графом
         return "FLASH"
     base = st.pop("resume", None) if cur == "FLASH" else cur
     if base == "N6" and f.get("screen") and st["D"] >= 6:
