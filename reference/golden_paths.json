@@ -22,70 +22,103 @@
   "risk": 4,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 1,
+    "after_choice": 2,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 1,
-    "walkout_scene": null,
-    "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "N9",
-    "entry_face": 1
+    "next_node": "N8",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 8,
+    "after_choice": 5,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": false
+   },
+   {
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "partial",
+    "branch": false
    }
   ]
  },
@@ -112,70 +145,103 @@
   "risk": 3,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 14,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
+   },
+   {
+    "after_choice": 5,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N3",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 2,
-    "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 10,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
-    "walkout_scene": 2,
+    "after_choice": 12,
+    "walkout_scene": 5,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": true
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -202,70 +268,103 @@
   "risk": 7,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 9,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 1,
+    "after_choice": 2,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": 3,
     "next_node": "N9",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -292,70 +391,103 @@
   "risk": 1,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -383,76 +515,112 @@
   "risk": 6,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "FLASH",
-    "entry_face": 4
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": null
+   },
+   {
+    "after_choice": 13,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 1,
-    "walkout_scene": null,
-    "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 2,
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
+   },
+   {
+    "after_choice": 5,
     "walkout_scene": 3,
     "next_node": "N9",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -479,70 +647,103 @@
   "risk": 9,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 14,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N3",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 2,
-    "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 6,
+    "after_choice": 2,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -570,76 +771,112 @@
   "risk": 3,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "FLASH",
-    "entry_face": 4
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 1,
-    "walkout_scene": null,
-    "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 2,
-    "walkout_scene": 3,
-    "next_node": "N9",
-    "entry_face": 1
+    "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 9,
+    "after_choice": 5,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
+   },
+   {
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": true
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -666,70 +903,103 @@
   "risk": 6,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
-    "next_node": "N8",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 8,
-    "walkout_scene": null,
-    "next_node": "N9",
-    "entry_face": 6
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
+    "next_node": "N8",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
+   },
+   {
+    "after_choice": 12,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": true
+   },
+   {
+    "after_choice": 13,
+    "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -756,70 +1026,103 @@
   "risk": 6,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 1,
+    "after_choice": 2,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": 3,
     "next_node": "N9",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -847,76 +1150,112 @@
   "risk": 6,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 13,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N5",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
-    "next_node": "FLASH",
-    "entry_face": 4
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 10,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 5,
+    "walkout_scene": 3,
+    "next_node": "N9",
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": false
+   },
+   {
+    "after_choice": 12,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 2,
-    "walkout_scene": 3,
-    "next_node": "N9",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 8,
-    "walkout_scene": null,
-    "next_node": "N10",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -943,70 +1282,103 @@
   "risk": 5,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": true
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 1,
+    "after_choice": 2,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 10
+    "entry_face": 15,
+    "entry_narr_face": 15,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 1,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "N10",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -1033,70 +1405,103 @@
   "risk": 7,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "partial",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -1123,70 +1528,103 @@
   "risk": 1,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
+   },
+   {
+    "after_choice": 14,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
+   },
+   {
+    "after_choice": 11,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N3",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 7,
-    "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "partial",
+    "branch": false
    }
   ]
  },
@@ -1210,52 +1648,76 @@
   "risk": 15,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "FLASH",
-    "entry_face": 4
-   },
-   {
-    "after_choice": 5,
-    "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": 2,
-    "next_node": "N9",
-    "entry_face": 8
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 8,
     "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": 5,
+    "next_node": "N9",
+    "entry_face": 12,
+    "entry_narr_face": 12,
+    "grade": "partial",
+    "branch": null
+   },
+   {
+    "after_choice": 12,
+    "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -1283,76 +1745,112 @@
   "risk": 0,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 9,
     "walkout_scene": null,
     "next_node": "N6B",
-    "entry_face": 6
+    "entry_face": 11,
+    "entry_narr_face": 11,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 10,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -1379,70 +1877,103 @@
   "risk": 4,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
+   },
+   {
+    "after_choice": 5,
+    "walkout_scene": null,
+    "next_node": "N9",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
+   },
+   {
+    "after_choice": 14,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": true
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "N9",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 9,
-    "walkout_scene": null,
-    "next_node": "N10",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -1465,46 +1996,67 @@
   "risk": 14,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "FLASH",
-    "entry_face": 4
-   },
-   {
-    "after_choice": 5,
-    "walkout_scene": 2,
-    "next_node": "N9",
-    "entry_face": 8
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 8,
+    "walkout_scene": 5,
+    "next_node": "N9",
+    "entry_face": 12,
+    "entry_narr_face": 12,
+    "grade": "error",
+    "branch": null
+   },
+   {
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": false
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -1532,76 +2084,112 @@
   "risk": 13,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "FLASH",
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": null
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "partial",
+    "branch": null
+   },
+   {
+    "after_choice": 9,
+    "walkout_scene": null,
+    "next_node": "N5",
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
+   },
+   {
+    "after_choice": 12,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "FLASH",
-    "entry_face": 4
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
-    "next_node": "N5",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
-    "next_node": "N6",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 8,
-    "walkout_scene": null,
-    "next_node": "N7",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 1,
-    "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 8
+    "entry_face": 12,
+    "entry_narr_face": 12,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 2,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -1629,76 +2217,112 @@
   "risk": 0,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
+   },
+   {
+    "after_choice": 13,
+    "walkout_scene": null,
+    "next_node": "N6",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N6",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N6B",
-    "entry_face": 6
+    "entry_face": 11,
+    "entry_narr_face": 11,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 10,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -1725,70 +2349,103 @@
   "risk": 2,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
+   },
+   {
+    "after_choice": 14,
+    "walkout_scene": null,
+    "next_node": "N3",
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
+   },
+   {
+    "after_choice": 5,
+    "walkout_scene": null,
+    "next_node": "N4",
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 9,
     "walkout_scene": null,
-    "next_node": "N3",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 2,
-    "walkout_scene": null,
-    "next_node": "N4",
-    "entry_face": 6
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "N7",
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "N7",
-    "entry_face": 1
-   },
-   {
-    "after_choice": 1,
-    "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 8,
-    "walkout_scene": 2,
+    "after_choice": 12,
+    "walkout_scene": 5,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": true
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "partial",
+    "branch": false
    }
   ]
  },
@@ -1815,70 +2472,103 @@
   "risk": 9,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "partial",
+    "branch": null
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "N10",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -1905,70 +2595,103 @@
   "risk": 5,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": true
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 9
+    "entry_face": 14,
+    "entry_narr_face": 14,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "error",
+    "branch": null
    }
   ]
  },
@@ -1996,76 +2719,112 @@
   "risk": 1,
   "faces": [
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 7,
+    "after_choice": 11,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 10,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "FLASH",
-    "entry_face": 4
+    "entry_face": 6,
+    "entry_narr_face": 6,
+    "grade": "error",
+    "branch": false
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 10,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": 3,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": false
+   },
+   {
+    "after_choice": 4,
+    "walkout_scene": null,
+    "next_node": "N10",
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "partial",
+    "branch": false
    },
    {
     "after_choice": 2,
     "walkout_scene": null,
-    "next_node": "N10",
-    "entry_face": 2
-   },
-   {
-    "after_choice": 6,
-    "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 6
+    "entry_face": 2,
+    "entry_narr_face": 2,
+    "grade": "partial",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "partial",
+    "branch": false
    }
   ]
  },
@@ -2092,70 +2851,103 @@
   "risk": 7,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 6,
+    "after_choice": 10,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 15,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "good",
+    "branch": null
    }
   ]
  },
@@ -2182,70 +2974,103 @@
   "risk": 10,
   "faces": [
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N2",
-    "entry_face": 8
+    "entry_face": 4,
+    "entry_narr_face": 1,
+    "grade": "partial",
+    "branch": null
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N3",
-    "entry_face": 6
+    "entry_face": 9,
+    "entry_narr_face": 9,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 5,
     "walkout_scene": null,
     "next_node": "N4",
-    "entry_face": 6
+    "entry_face": 10,
+    "entry_narr_face": 9,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 13,
     "walkout_scene": null,
     "next_node": "N5",
-    "entry_face": 2
+    "entry_face": 5,
+    "entry_narr_face": 2,
+    "grade": "good",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N6",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": true
    },
    {
-    "after_choice": 8,
+    "after_choice": 12,
     "walkout_scene": null,
     "next_node": "N7",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 2,
+    "after_choice": 4,
     "walkout_scene": null,
     "next_node": "N8",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 15,
     "walkout_scene": null,
     "next_node": "N9",
-    "entry_face": 1
+    "entry_face": 4,
+    "entry_narr_face": 4,
+    "grade": "good",
+    "branch": null
    },
    {
-    "after_choice": 9,
+    "after_choice": 14,
     "walkout_scene": null,
     "next_node": "N10",
-    "entry_face": 2
+    "entry_face": 8,
+    "entry_narr_face": 5,
+    "grade": "good",
+    "branch": true
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": "N11",
-    "entry_face": 1
+    "entry_face": 1,
+    "entry_narr_face": 1,
+    "grade": "error",
+    "branch": null
    },
    {
     "after_choice": 1,
     "walkout_scene": null,
     "next_node": null,
-    "entry_face": null
+    "entry_face": null,
+    "entry_narr_face": null,
+    "grade": "partial",
+    "branch": false
    }
   ]
  }

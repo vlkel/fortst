@@ -43,26 +43,47 @@ def apply(eff, st):
 
 # Граф дозволених переходів виразів за один екран (залишитися в тому самому можна завжди)
 GRAPH = {
-    1: {2, 4, 6, 8, 9},
-    2: {1, 3, 4, 5, 6, 8, 9},
-    3: {1, 2, 6},
-    4: {1, 2, 5, 6, 8, 9},
-    5: {2, 4, 6, 8, 9},
-    6: {1, 2, 7, 8, 9},
-    7: {1, 6, 8, 9},
-    8: {1, 2, 4, 6, 9},
-    9: {1, 2, 6, 7, 8, 10},
-    10: {1, 2, 6, 7, 9},
+    1: {2, 4, 5, 9, 10, 12, 13, 14, 15},              # закритий
+    2: {1, 4, 5, 7, 9, 13},                   # скептичний
+    3: {1, 4, 5, 10},                         # гнів, агресія: лише після 5
+    4: {1, 2, 5, 9, 10, 12, 13, 14},          # стримана фрустрація, втомлено-похмурий
+    5: {1, 2, 3, 4, 7, 8, 9, 12, 13, 14},         # напруження, роздратування, настороженість
+    6: {5, 8, 9, 12, 13},                     # відсутній погляд
+    7: {2, 5, 6, 8, 13},                      # гіпернастороженість
+    8: {1, 2, 5, 6, 7, 9, 13, 14},               # тривога, придушена паніка
+    9: {1, 2, 4, 5, 10, 11, 12, 13},          # сором, погляд униз
+    10: {4, 9, 11, 12, 13},                   # провина
+    11: {4, 5, 9, 10, 12, 13, 14},               # сум, стримані сльози
+    12: {1, 4, 5, 6, 9, 13},                  # глибока втома
+    13: {1, 2, 9, 10, 11, 14, 15},              # осмислення
+    14: {1, 2, 5, 11, 12, 13, 15},            # полегшення
+    15: {1, 2, 5, 9, 11, 13, 14},             # обережна довіра
 }
+# сильні вирази (гнів, дисоціація, паніка, сльози) не бувають проміжним кроком
+STRONG = {3, 6, 8, 11}
 # Якщо до цілі кілька рівноцінних проміжних кроків: якому віддати перевагу
 PREFER = {
-    7: [6, 9, 8],   # до сліз: через погляд униз, а не через полегшення
-    3: [2, 6],      # до гніву: через роздратування
-    5: [2, 4],      # до страху: через напругу
-    10: [9, 7],     # до довіри: через полегшення
+    4: [12, 1, 2, 5],   # до втомлено-похмурого: через втому або закритість
+    3: [5],             # до гніву: лише через напруження і роздратування
+    11: [9, 10, 13],    # до сліз: через погляд униз або провину
+    10: [9],            # до провини: через сором
+    8: [5, 7, 2],       # до тривоги: через напруження або настороженість
+    15: [14, 13],       # до довіри: через полегшення
+    14: [13],           # до полегшення: через осмислення
 }
-# Інтенсивність для вибору між рівноцінними проміжними кроками (менша краще)
-INTENSITY = {9: 1, 10: 1, 1: 2, 8: 2, 2: 3, 6: 3, 4: 4, 7: 4, 3: 5, 5: 5}
+# Перевага для конкретної пари «звідки, куди» (сильніша за PREFER)
+PREFER_PAIR = {
+    (10, 1): [9],       # від провини до закритості: через сором, погляд униз
+}
+# Координати виразів (валентність, збудження): серед рівноцінних проміжних кроків
+# обирається найближчий до цілі за змістом
+COORD = {1: (-1, 0.3), 2: (-1, 0.4), 3: (-3, 1), 4: (-2, 0.6), 5: (-1.5, 0.8),
+         6: (-1.5, -0.5), 7: (-2, 1), 8: (-2.5, 1), 9: (-2, -0.2), 10: (-2.5, 0),
+         11: (-2.5, -0.3), 12: (-1, -1), 13: (0, 0.2), 14: (1, -0.5), 15: (2, 0)}
+
+
+def _gap(a, b):
+    return ((COORD[a][0] - COORD[b][0]) ** 2 + (COORD[a][1] - COORD[b][1]) ** 2) ** 0.5
 
 
 def _dist_from(src):
@@ -87,8 +108,11 @@ def step_toward(cur, target):
     if cur == target:
         return cur
     cands = [v for v in GRAPH[cur] if DIST[v][target] == DIST[cur][target] - 1]
-    pref = PREFER.get(target, [])
-    return min(cands, key=lambda v: (pref.index(v) if v in pref else len(pref), INTENSITY[v], v))
+    # сильні вирази (гнів, дисоціація, паніка, сльози) не бувають проміжним кроком
+    mild = [v for v in cands if v == target or v not in STRONG]
+    cands = mild or cands
+    pref = PREFER_PAIR.get((cur, target)) or PREFER.get(target, [])
+    return min(cands, key=lambda v: (pref.index(v) if v in pref else len(pref), _gap(v, target), v))
 
 
 def resolve_expr(spec, st):
@@ -102,34 +126,14 @@ def target_expression(st, before, opt, branch=None):
     """Цільовий вираз репліки: авторський, з урахуванням гілки умови варіанта."""
     if branch is not None and "expr_then" in opt:
         return resolve_expr(opt["expr_then"] if branch else opt["expr_else"], st)
-    if "expr" in opt:
-        return resolve_expr(opt["expr"], st)
-    return expression(st, before, opt, None)
+    return resolve_expr(opt["expr"], st)   # кожен варіант має авторську ціль
 
 
 def session_entry_expression(st):
     """Вираз на вході в другу сесію: зі стану через тиждень, без пам'яті про попередній."""
-    if st["Z"] >= 7: return 8          # «Гірше. Але працюю.» темні кола
-    if st["Z"] >= 4: return 6 if st["S"] >= 8 else 1
-    return 10 if st["D"] >= 6 else 1
-
-
-def expression(st, before, opt, node):
-    """Правила цільового виразу обличчя, за пріоритетом."""
-    if opt is not None and "expr" in opt:
-        return opt["expr"]
-    D, Z, Sh = st["D"], st["Z"], st["S"]
-    dD, dZ = D - before["D"], Z - before["Z"]
-    if Z >= 9 and st.get("session", 1) == 1: return 5   # паніка лише в гострій фазі
-    if Z >= 9: return 2
-    if dD <= -2: return 3
-    if Sh >= 8: return 6
-    if Z >= 7: return 2
-    if D >= 7 and Z <= 4: return 10
-    if dZ < 0 and D >= 5: return 9
-    if Z <= 3 and D < 5: return 8
-    if D >= 6 and Z <= 5: return 10
-    return 1   # сльози (7) лише як ручний вираз у репліках про втрату
+    if st["Z"] >= 7: return 12         # «Стало тільки гірше.» глибока втома
+    if st["Z"] >= 4: return 9 if st["S"] >= 8 else 4
+    return 15 if st["D"] >= 6 else 1
 
 
 def choose(st, node_id, idx):
@@ -145,10 +149,18 @@ def choose(st, node_id, idx):
         apply(opt["cond"]["then"] if ok else opt["cond"]["else"], st)
         reply = opt.get("reply_then" if ok else "reply_else", reply)
     st["log"].append((node_id, opt["letter"], dict(before), {k: st[k] for k in "DZS"}))
+    st["last_branch"] = ok      # None, якщо умови немає, інакше True або False
     target = target_expression(st, before, opt, ok)
     st["last_target"] = target
     st["face"] = step_toward(st["face"], target)
     return reply, st["face"]
+
+
+def pick(spec, branch):
+    """Текст або оцінка розбору: рядок або {"then": .., "else": ..} за гілкою умови варіанта."""
+    if isinstance(spec, dict):
+        return spec["then"] if branch else spec["else"]
+    return spec
 
 
 def between_sessions(st):
@@ -213,7 +225,11 @@ def next_node(st, cur):
     """Маршрутизація після вибору у вузлі cur плюс крок обличчя до виразу ситуації нового вузла."""
     nxt = _route(st, cur)
     if nxt is not None and "sit_expr" in NODE[nxt]:
-        st["face"] = step_toward(st["face"], NODE[nxt]["sit_expr"])
+        # два екрани ситуації: розповідь (крок 1) і репліка Андрія (крок 2)
+        st["narr_face"] = step_toward(st["face"], NODE[nxt]["sit_expr"])
+        st["face"] = step_toward(st["narr_face"], NODE[nxt]["sit_expr"])
+    else:
+        st["narr_face"] = st["face"]
     return nxt
 
 
