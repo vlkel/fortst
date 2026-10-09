@@ -19,14 +19,17 @@
 
   // Тексти інтерфейсу (не зі сценарію)
   var UI = {
-    next: 'Далі',
     back: 'Назад',
-    debrief: 'Розбір',
+    name: 'Андрій',
     restart: 'Почати знову',
     session1: 'Перша зустріч',
     session2: 'Друга зустріч через тиждень',
-    epilogue: 'Через місяць'
+    epilogue: 'Через місяць',
+    expandAll: 'Розгорнути все',
+    collapseAll: 'Згорнути все'
   };
+
+  var GRADE_TEXT = { good: 'вдале рішення', partial: 'частково вдале', error: 'помилка' };
 
   var FLAG_TEXT = {
     conf: 'Пояснено конфіденційність і її межі',
@@ -106,9 +109,13 @@
 
   var SCALE_NAME = { D: 'Довіра', Z: 'Збудження', S: 'Сором' };
 
+  // Клітинка спрайта і нижня межа голови з шиєю (частка висоти клітинки, виміряно по всіх 15 виразах)
+  var CELL_W = 560, CELL_H = 660, HEAD_BOTTOM = 0.69;
+
   // Стан гри. Кожен перехід кладе в history знімок усього стану (шкали, прапорці, журнал,
-  // вираз обличчя, черга екранів), тож «Назад» просто відновлює попередній знімок.
+  // вирази, черга екранів), тож «Назад» просто відновлює попередній знімок.
   var st, screen, queue, history;
+  var L = {};   // поточний макет (layout)
 
   function h(tag, attrs, children) {
     var el = document.createElement(tag);
@@ -124,22 +131,43 @@
     return el;
   }
 
-  function faceEl(n, cls) {
-    return h('div', { 'class': (cls || 'face') + ' e' + n, 'data-expr': String(n),
-      role: 'img', 'aria-label': SC.expressions[String(n)] });
+  // Клітинка спрайта висотою ch пікселів: повний кадр (crop 1) або верхня частина.
+  // Ширина і висота клітинки цілі, тож у кадр не потрапляє смужка сусідньої клітинки
+  // (пропорції відхиляються менш ніж на півпікселя).
+  function spriteStyle(el, n, ch, crop) {
+    ch = Math.round(ch);
+    var cw = Math.round(ch * CELL_W / CELL_H);
+    var c = (n - 1) % 5, r = Math.floor((n - 1) / 5);
+    el.style.width = cw + 'px';
+    el.style.height = Math.round(ch * crop) + 'px';
+    el.style.backgroundSize = (cw * 5) + 'px ' + (ch * 3) + 'px';
+    el.style.backgroundPosition = (-c * cw) + 'px ' + (-r * ch) + 'px';
+    el.setAttribute('data-expr', String(n));
+    el.setAttribute('role', 'img');
+    el.setAttribute('aria-label', SC.expressions[String(n)]);
+    return el;
   }
 
-  function sessionLabel(nodeId) {
-    return E.NODE[nodeId].session === 1 ? UI.session1 : UI.session2;
+  function thumb(n) {
+    return spriteStyle(h('div', { 'class': 'thumb' }), n, L.thumb * CELL_H / CELL_W, 0.72);
   }
 
-  // Вираз обличчя на екрані: на вступі 1, у вузлі поточний вираз зі стану,
-  // на решті екранів той, що записано в самому екрані.
-  function screenExpr(s) {
-    if (s.type === 'intro') return 1;
-    if (s.type === 'node') return st.face;
-    if (s.type === 'epilogue' || s.type === 'debrief') return SC.endings[E.ending(st)].expr;
-    return s.face;
+  // ---------- Черга екранів ----------
+
+  function textScreens(text, face, ctx, node) {
+    return E.fragments(text).map(function (f) {
+      return { type: 'text', kind: f.kind, text: f.text, face: face, ctx: ctx, node: node || null };
+    });
+  }
+
+  // Вхід у вузол: фрагменти розповіді (narr_face), фрагменти ситуації (face), меню (face)
+  function nodeScreens(id) {
+    var node = E.NODE[id];
+    var list = textScreens(node.narration, st.narr_face, 'narration', id)
+      .concat(textScreens(E.situation(id, st), st.face, 'situation', id));
+    var last = list[list.length - 1];
+    list.push({ type: 'menu', node: id, face: st.face, kind: last.kind, text: last.text });
+    return list;
   }
 
   function snapshot() {
@@ -148,14 +176,11 @@
 
   function reset() {
     st = E.newState();
-    queue = [];
     history = [];
-    screen = { type: 'intro', i: 0 };
-    render();
-  }
-
-  function show(s) {
-    screen = s;
+    queue = [{ type: 'title', text: UI.session1 }]
+      .concat(SC.intro.reduce(function (a, t) { return a.concat(textScreens(t, 1, 'intro')); }, []))
+      .concat(nodeScreens('N1'));
+    screen = queue.shift();
     render();
   }
 
@@ -172,131 +197,195 @@
     render();
   }
 
-  // Що показати після екрана з кнопкою «Далі»
+  // Наступний фрагмент (клік по сцені, пробіл, Enter)
   function advance() {
-    var s = screen;
+    if (!screen || (screen.type !== 'text' && screen.type !== 'title') || !queue.length) return;
     history.push(snapshot());
-    if (s.type === 'intro') {
-      if (s.i + 1 < SC.intro.length) show({ type: 'intro', i: s.i + 1 });
-      else show({ type: 'node', id: 'N1' });
-    } else if (s.type === 'reply' || s.type === 'walkout' || s.type === 'session2') {
-      show(queue.shift());
-    } else if (s.type === 'epilogue') {
-      show({ type: 'debrief' });
-    }
+    screen = queue.shift();
+    render();
   }
 
   function pick(idx) {
-    var id = screen.id;
+    if (!screen || screen.type !== 'menu') return;
+    var id = screen.node;
     history.push(snapshot());
     var res = E.step(st, id, idx);
-    queue = [];
-    if (res.walkout) queue.push({ type: 'walkout', face: res.walkoutFace });
-    if (res.session2) queue.push({ type: 'session2', face: res.session2Face });
-    queue.push(res.next === null ? { type: 'epilogue' } : { type: 'node', id: res.next });
-    show({ type: 'reply', id: id, idx: idx, reply: res.reply, face: res.expr });
+    var q = textScreens(res.reply, res.expr, 'reply', id);
+    if (res.walkout) q = q.concat(textScreens(SC.walkout.text, res.walkoutFace, 'walkout'));
+    if (res.session2) {
+      q.push({ type: 'title', text: UI.session2 });
+      q = q.concat(textScreens(SC.session2_entry[res.session2].text, res.session2Face, 'session2'));
+    }
+    if (res.next === null) {
+      var end = SC.endings[E.ending(st)];
+      q.push({ type: 'title', text: UI.epilogue });
+      q = q.concat(textScreens(end.text, end.expr, 'epilogue'));
+      q.push({ type: 'debrief' });
+    } else {
+      q = q.concat(nodeScreens(res.next));
+    }
+    queue = q;
+    screen = queue.shift();
+    render();
   }
 
-  function nextButton(text) {
-    return h('div', { 'class': 'actions' }, [
-      h('button', { 'class': 'btn', type: 'button', 'data-action': 'next', text: text || UI.next, onclick: advance })
-    ]);
+  // ---------- Макет ----------
+
+  // Усі фрагменти сценарію: за найдовшим визначається стала висота текстового поля
+  var ALL_FRAGMENTS = (function () {
+    var texts = SC.intro.slice();
+    SC.nodes.forEach(function (n) {
+      texts.push(n.narration, n.situation);
+      (n.situation_by_Z || []).forEach(function (r) { texts.push(r[2]); });
+      n.options.forEach(function (o) { texts.push(o.reply, o.reply_then, o.reply_else); });
+    });
+    texts.push(SC.walkout.text);
+    Object.keys(SC.session2_entry).forEach(function (k) { texts.push(SC.session2_entry[k].text); });
+    Object.keys(SC.endings).forEach(function (k) { texts.push(SC.endings[k].text); });
+    var out = [];
+    texts.forEach(function (t) { if (t) out = out.concat(E.fragments(t)); });
+    return out;
+  })();
+
+  function setVar(name, px) {
+    document.documentElement.style.setProperty(name, px + 'px');
   }
+
+  // Шрифти цілими пікселями від розміру вікна; висота поля за найдовшим фрагментом;
+  // портрет приблизно 75% висоти вікна, але голова з шиєю завжди над текстовим полем.
+  function layout() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var fs = Math.max(18, Math.min(Math.round(vh / 26), Math.round(vw / 46)));
+    L = {
+      vw: vw, vh: vh, fs: fs,
+      fsName: Math.round(fs * 0.86),
+      fsOpt: Math.round(fs * 0.86),
+      fsTitle: Math.round(fs * 1.6),
+      fsUi: Math.max(16, Math.round(fs * 0.72)),
+      fsD: Math.max(18, Math.min(Math.round(vh / 32), Math.round(vw / 56))),
+      padX: Math.max(16, Math.round(vw * 0.06))
+    };
+    L.fsH1 = Math.round(L.fsD * 1.7);
+    L.fsH2 = Math.round(L.fsD * 1.3);
+    L.thumb = Math.round(L.fsD * 3.6);
+    setVar('--fs', L.fs);
+    setVar('--fs-name', L.fsName);
+    setVar('--fs-opt', L.fsOpt);
+    setVar('--fs-title', L.fsTitle);
+    setVar('--fs-ui', L.fsUi);
+    setVar('--fs-d', L.fsD);
+    setVar('--fs-h1', L.fsH1);
+    setVar('--fs-h2', L.fsH2);
+    setVar('--pad-x', L.padX);
+
+    // Висота найдовшого фрагмента в ширині текстового поля
+    var probe = h('p', { 'class': 'line' });
+    var box = h('div', { 'class': 'textbox' }, [probe]);
+    box.style.visibility = 'hidden';
+    box.style.height = 'auto';
+    document.body.appendChild(box);
+    var maxH = 0;
+    ALL_FRAGMENTS.forEach(function (f) {
+      probe.className = 'line ' + f.kind;
+      probe.textContent = f.text;
+      maxH = Math.max(maxH, probe.getBoundingClientRect().height);
+    });
+    document.body.removeChild(box);
+    var padTop = Math.round(fs * 0.9), padBottom = Math.round(fs * 1.4);
+    L.boxH = Math.ceil(maxH) + padTop + padBottom;
+    setVar('--box-h', L.boxH);
+
+    // Портрет
+    var limit = vh - L.boxH - Math.round(fs * 0.5);   // нижче цієї лінії голова не опускається
+    var ph = Math.round(vh * 0.75);
+    var top = Math.round(vh * 0.04);
+    if (top + ph * HEAD_BOTTOM > limit) top = Math.round(limit - ph * HEAD_BOTTOM);
+    var minTop = Math.round(vh * 0.02);
+    if (top < minTop) {
+      top = minTop;
+      ph = Math.floor((limit - top) / HEAD_BOTTOM);
+    }
+    if (ph * CELL_W / CELL_H > vw) ph = Math.floor(vw * CELL_H / CELL_W);
+    L.portraitH = ph;
+    L.portraitTop = top;
+    L.headBottom = Math.round(top + ph * HEAD_BOTTOM);
+    L.menuW = Math.min(vw - 2 * L.padX, Math.round(fs * 44));
+  }
+
+  // ---------- Відображення ----------
 
   function backButton() {
-    return h('button', { 'class': 'btn-back', type: 'button', 'data-action': 'back', onclick: back }, [
-      h('span', { 'class': 'arrow', 'aria-hidden': 'true', text: '←' }), UI.back
+    return h('button', {
+      'class': 'btn-back', type: 'button', 'data-action': 'back',
+      onclick: function (ev) { ev.stopPropagation(); back(); }
+    }, [h('span', { 'aria-hidden': 'true', text: '←' }), UI.back]);
+  }
+
+  function portrait(n) {
+    var el = spriteStyle(h('div', { 'class': 'portrait' }), n, L.portraitH, 1);
+    el.style.top = L.portraitTop + 'px';
+    // Нижній край кадру згасає вже під текстовим полем, щоб крізь нього не просвічувала межа картинки
+    var fade = L.vh - L.boxH - L.portraitTop;
+    if (fade < L.portraitH) {
+      var mask = 'linear-gradient(to bottom, #000 ' + fade + 'px, transparent ' + L.portraitH + 'px)';
+      el.style.webkitMaskImage = mask;
+      el.style.maskImage = mask;
+    }
+    return el;
+  }
+
+  function textbox(kind, text, more) {
+    return h('div', { 'class': 'textbox' }, [
+      h('p', { 'class': 'line ' + kind, text: text }),
+      more ? h('span', { 'class': 'more', 'aria-hidden': 'true', text: '▼' }) : null
     ]);
   }
 
-  // Межі висоти фото: частка висоти вікна і мінімум, нижче якого фото не зменшується
-  var PHOTO_MAX = 0.4, PHOTO_MIN = 110;
-
-  function panelScreen(children, expr) {
-    app.innerHTML = '';
-    var panel = h('div', { 'class': 'panel' }, children);
-    var photo = h('div', { 'class': 'photo' }, [faceEl(expr)]);
-    var stage = h('div', { 'class': 'stage' }, [
-      canGoBack() ? backButton() : null,
-      h('div', { 'class': 'photo-area' }, [photo]),
-      panel
-    ]);
-    app.appendChild(stage);
-    fitPhoto();
-  }
-
-  // Усе має вміститися у вікно: якщо тексту багато, зменшується фото, а не шрифт
-  function fitPhoto() {
-    var stage = app.querySelector('.stage');
-    var photo = app.querySelector('.photo');
-    if (!stage || !photo) return;
-    var vh = window.innerHeight;
-    var max = Math.round(vh * PHOTO_MAX);
-    photo.style.height = max + 'px';
-    var extra = stage.scrollHeight - vh;
-    var hgt = extra > 0 ? Math.max(PHOTO_MIN, max - extra) : max;
-    photo.style.height = hgt + 'px';
-    document.body.setAttribute('data-photo', String(hgt));
+  function screenExpr(s) {
+    if (s.type === 'text' || s.type === 'menu') return s.face;
+    if (s.type === 'debrief') return SC.endings[E.ending(st)].expr;
+    return null;
   }
 
   function render() {
     // Варіант під нерухомим курсором не підсвічується, доки мишу не зрушать
     document.body.classList.add('no-hover');
-    var expr = screenExpr(screen);
-    document.body.setAttribute('data-screen', screen.type);
-    document.body.setAttribute('data-expr', String(expr));
-    document.body.setAttribute('data-node', screen.id || '');
     var s = screen;
-    if (s.type === 'intro') {
-      panelScreen([
-        h('p', { 'class': 'main-text', text: SC.intro[s.i] }),
-        nextButton()
-      ], expr);
-    } else if (s.type === 'node') {
-      var node = E.NODE[s.id];
-      var sit = E.situation(s.id, st);
-      panelScreen([
-        h('p', { 'class': 'label', text: sessionLabel(s.id) }),
-        h('p', { 'class': 'narration', text: node.narration }),
-        sit ? h('p', { 'class': 'main-text situation', text: sit }) : null,
-        h('ul', { 'class': 'options' }, node.options.map(function (o, i) {
-          return h('li', null, [h('button', {
-            'class': 'option', type: 'button', 'data-letter': o.letter,
-            onclick: function () { pick(i); }
-          }, [h('span', { 'class': 'letter', text: o.letter }), h('span', { text: o.text })])]);
-        }))
-      ], expr);
-    } else if (s.type === 'reply') {
-      var n2 = E.NODE[s.id];
-      var o2 = n2.options[s.idx];
-      panelScreen([
-        h('p', { 'class': 'label', text: sessionLabel(s.id) }),
-        h('p', { 'class': 'chosen' }, [h('span', { 'class': 'letter-inline', text: o2.letter + '. ' }), o2.text]),
-        h('p', { 'class': 'main-text', text: s.reply }),
-        nextButton()
-      ], expr);
-    } else if (s.type === 'walkout') {
-      panelScreen([
-        h('p', { 'class': 'label', text: UI.session1 }),
-        h('p', { 'class': 'main-text', text: SC.walkout.text }),
-        nextButton()
-      ], expr);
-    } else if (s.type === 'session2') {
-      panelScreen([
-        h('p', { 'class': 'label', text: UI.session2 }),
-        h('p', { 'class': 'main-text', text: SC.session2_entry[st.session2.key].text }),
-        nextButton()
-      ], expr);
-    } else if (s.type === 'epilogue') {
-      var end = SC.endings[E.ending(st)];
-      panelScreen([
-        h('p', { 'class': 'label', text: UI.epilogue }),
-        h('p', { 'class': 'ending-title', text: end.title }),
-        h('p', { 'class': 'main-text', text: end.text }),
-        nextButton(UI.debrief)
-      ], expr);
-    } else if (s.type === 'debrief') {
+    var expr = screenExpr(s);
+    document.body.setAttribute('data-screen', s.type);
+    document.body.setAttribute('data-expr', expr === null ? '' : String(expr));
+    document.body.setAttribute('data-node', s.node || '');
+    document.body.setAttribute('data-ctx', s.ctx || '');
+    document.body.setAttribute('data-kind', s.kind || '');
+    app.innerHTML = '';
+    if (s.type === 'debrief') {
       renderDebrief();
+    } else {
+      var scene = h('div', { 'class': 'scene' + (s.type === 'menu' ? ' menu-open' : '') });
+      scene.addEventListener('click', advance);
+      if (s.type === 'title') {
+        scene.appendChild(h('div', { 'class': 'title-card' }, [
+          h('h1', { text: s.text }), h('div', { 'class': 'rule' })
+        ]));
+      } else {
+        scene.appendChild(portrait(s.face));
+        if (s.kind === 'speech') scene.appendChild(h('div', { 'class': 'nameplate', text: UI.name }));
+        scene.appendChild(textbox(s.kind, s.text, s.type === 'text'));
+      }
+      if (s.type === 'menu') {
+        scene.appendChild(h('div', { 'class': 'dim' }));
+        var menu = h('div', { 'class': 'menu' }, E.NODE[s.node].options.map(function (o, i) {
+          return h('button', {
+            'class': 'option', type: 'button', 'data-letter': o.letter,
+            onclick: function (ev) { ev.stopPropagation(); pick(i); }
+          }, [h('span', { 'class': 'letter', text: o.letter }), h('span', { 'class': 'opt-text', text: o.text })]);
+        }));
+        menu.style.width = L.menuW + 'px';
+        menu.style.top = Math.round((L.vh - L.boxH) / 2) + 'px';
+        scene.appendChild(menu);
+      }
+      if (canGoBack()) scene.appendChild(backButton());
+      app.appendChild(scene);
     }
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     window.scrollTo(0, 0);
@@ -313,29 +402,17 @@
     ['D', 'Z', 'S'].forEach(function (k) {
       var d = after[k] - before[k];
       var cls = d === 0 ? 'same' : ((k === 'D' ? d > 0 : d < 0) ? 'up' : 'down');
+      var arrow = d > 0 ? ' ↑' : (d < 0 ? ' ↓' : '');
       rows.push(h('span', { 'class': 'name', text: SCALE_NAME[k] }));
-      rows.push(h('span', { 'class': cls, text: before[k] + ' → ' + after[k] + (d ? '  (' + signed(d) + ')' : '') }));
+      rows.push(h('span', { 'class': cls, text: before[k] + ' → ' + after[k] + (d ? '  (' + signed(d) + ')' + arrow : '') }));
     });
     return h('div', { 'class': 'scales' }, rows);
   }
 
   function flagsText(list) {
-    var names = list.map(function (f) {
+    return list.map(function (f) {
       return (FLAG_TEXT[f] || f) + (E.COUNTERS[f] ? ' (' + st.flags[f] + ')' : '');
-    });
-    return names.join(', ');
-  }
-
-  // Точки графіка: старт, кожен вибір, вхід у другу сесію
-  function chartPoints() {
-    var pts = [{ label: 'старт', v: SC.start }];
-    st.log.forEach(function (e) {
-      pts.push({ label: e.node + ' ' + e.letter, v: e.after });
-      if (st.session2 && e === lastSessionOneEntry()) {
-        pts.push({ label: 'тиждень', v: st.session2.after });
-      }
-    });
-    return pts;
+    }).join(', ');
   }
 
   function lastSessionOneEntry() {
@@ -344,9 +421,20 @@
     return last;
   }
 
+  // Точки графіка: старт, кожен вибір, вхід у другу сесію
+  function chartPoints() {
+    var pts = [{ label: 'старт', v: SC.start }];
+    var lastS1 = lastSessionOneEntry();
+    st.log.forEach(function (e) {
+      pts.push({ label: e.node + ' ' + e.letter, v: e.after });
+      if (st.session2 && e === lastS1) pts.push({ label: 'тиждень', v: st.session2.after });
+    });
+    return pts;
+  }
+
   function renderChart(box) {
     var pts = chartPoints();
-    var W = Math.max(600, box.clientWidth - 40), H = 230, padL = 48, padR = 36, padT = 12, padB = 12;
+    var W = Math.max(700, box.clientWidth - 40), H = Math.round(L.fsD * 9), padL = 40, padR = 40, padT = 12, padB = 12;
     var x = function (i) { return padL + i * (W - padL - padR) / (pts.length - 1); };
     var y = function (v) { return padT + (10 - v) * (H - padT - padB) / 10; };
     var ns = 'http://www.w3.org/2000/svg';
@@ -358,7 +446,7 @@
       var l = document.createElementNS(ns, 'line');
       l.setAttribute('x1', padL); l.setAttribute('x2', W - padR);
       l.setAttribute('y1', y(v)); l.setAttribute('y2', y(v));
-      l.setAttribute('stroke', '#d3cec6'); l.setAttribute('stroke-width', v === 5 ? 1 : 1.5);
+      l.setAttribute('stroke', '#cdbfa8'); l.setAttribute('stroke-width', v === 5 ? 1 : 1.5);
       if (v === 5) l.setAttribute('stroke-dasharray', '4 6');
       svg.appendChild(l);
     });
@@ -390,26 +478,40 @@
     box.appendChild(labels);
   }
 
+  function nodeLabel(e) {
+    return e.node + '. ' + E.NODE[e.node].title;
+  }
+
   function stepRow(e, i) {
-    var node = E.NODE[e.node];
-    var opt = node.options[e.idx];
-    var flags = e.flags.length ? h('p', { 'class': 'flags', text: 'Прапорці: ' + flagsText(e.flags) }) : null;
-    return h('div', { 'class': 'step', 'data-step': String(i + 1) }, [
-      faceEl(e.expr, 'thumb'),
-      h('div', null, [
-        h('p', { 'class': 'node-name', text: e.node + '. ' + node.title }),
-        h('p', { 'class': 'opt' }, [h('span', { 'class': 'letter-inline', text: opt.letter }), opt.text]),
-        h('p', { 'class': 'why' }, [h('b', { text: 'Розбір. ' }), opt.debrief]),
-        flags
+    var opt = E.NODE[e.node].options[e.idx];
+    var a = opt.analysis;
+    var body = [
+      h('h3', { text: 'До чого це призвело' }), h('p', { text: E.pick(a.result, e.branch) }),
+      h('h3', { text: 'Коли доречне, а коли ні' }), h('p', { text: a.when }),
+      h('h3', { text: 'Чи доречне тут' }), h('p', { text: a.here })
+    ];
+    if (e.grade !== 'good' && a.better) body.push(h('h3', { text: 'Кращий варіант' }), h('p', { text: a.better }));
+    if (e.flags.length) body.push(h('p', { 'class': 'flags', text: 'Прапорці: ' + flagsText(e.flags) }));
+    return h('details', { 'class': 'step', 'data-step': String(i + 1) }, [
+      h('summary', null, [
+        thumb(e.expr),
+        h('div', null, [
+          h('p', { 'class': 'node-name' }, [
+            h('span', { 'class': 'toggle', 'aria-hidden': 'true', text: '▶' }), nodeLabel(e),
+            h('span', { 'class': 'badge ' + e.grade, text: GRADE_TEXT[e.grade] })
+          ]),
+          h('p', { 'class': 'opt' }, [h('span', { 'class': 'letter-inline', text: opt.letter }), opt.text])
+        ]),
+        scaleRows(e.before, e.after)
       ]),
-      scaleRows(e.before, e.after)
+      h('div', { 'class': 'body' }, body)
     ]);
   }
 
   function eventRow(exprN, text, before, after) {
-    return h('div', { 'class': 'step event' }, [
-      faceEl(exprN, 'thumb'),
-      h('div', null, [h('p', { 'class': 'main-text', text: text }), before ? scaleRows(before, after) : null])
+    return h('div', { 'class': 'event' }, [
+      thumb(exprN),
+      h('div', null, [h('p', { text: text }), before ? scaleRows(before, after) : null])
     ]);
   }
 
@@ -446,26 +548,55 @@
     return found;
   }
 
+  function gradeItem(e) {
+    var opt = E.NODE[e.node].options[e.idx];
+    return h('li', null, [
+      h('b', { text: nodeLabel(e) + ', ' + opt.letter + ': ' }), opt.analysis.short,
+      e.grade !== 'good' ? h('span', { 'class': 'badge ' + e.grade, text: GRADE_TEXT[e.grade] }) : null
+    ]);
+  }
+
   function renderDebrief() {
-    app.innerHTML = '';
     var endKey = E.ending(st);
     var end = SC.endings[endKey];
     var r = E.risk(st);
     var root = h('div', { 'class': 'debrief' });
     app.appendChild(root);
-
-    root.appendChild(h('div', { 'class': 'debrief-top' }, [backButton()]));
+    root.appendChild(backButton());
     root.appendChild(h('h1', { text: 'Розбір' }));
+
+    // 1. Що сталося
+    root.appendChild(h('h2', { text: 'Що сталося' }));
     root.appendChild(h('div', { 'class': 'summary' }, [
-      faceEl(end.expr, 'thumb'),
+      thumb(end.expr),
       h('div', null, [
         h('p', { 'class': 'ending-title', text: endKey + '. ' + end.title }),
-        h('p', { 'class': 'main-text', text: 'Індекс ризику R = ' + r + '. Довіра ' + st.D +
-          ', збудження ' + st.Z + ', сором ' + st.S + '. Фінал визначено так: ' + ENDING_RULE[endKey] + '.' })
+        h('p', { 'class': 'epilogue-text', text: end.text }),
+        h('p', { text: end.analysis })
       ])
     ]));
 
-    root.appendChild(h('h2', { text: 'Шкали' }));
+    // 2. Що вдалося і що ні
+    var good = st.log.filter(function (e) { return e.grade === 'good'; });
+    var other = st.log.filter(function (e) { return e.grade !== 'good'; });
+    root.appendChild(h('div', { 'class': 'grade-lists' }, [
+      h('div', { 'class': 'list-good' }, [
+        h('h2', { text: 'Що вдалося' }),
+        good.length ? h('ul', null, good.map(gradeItem)) : h('p', { text: 'Вдалих рішень немає.' })
+      ]),
+      h('div', { 'class': 'list-other' }, [
+        h('h2', { text: 'Що варто було зробити інакше' }),
+        other.length ? h('ul', null, other.map(gradeItem)) : h('p', { text: 'Таких рішень немає.' })
+      ])
+    ]));
+
+    // 3. Як варто було діяти
+    root.appendChild(h('h2', { text: 'Як варто було діяти' }));
+    root.appendChild(h('p', { text: end.how }));
+    root.appendChild(h('p', { 'class': 'best-line', text: SC.debrief_common.best_line }));
+
+    // 4. Хронологія
+    root.appendChild(h('h2', { text: 'Хронологія' }));
     var chart = h('div', { 'class': 'chart-box' }, [
       h('div', { 'class': 'legend' }, [
         h('span', { 'class': 'ld' }, [h('b', { text: 'Довіра' })]),
@@ -475,15 +606,13 @@
     ]);
     root.appendChild(chart);
     renderChart(chart);
-
-    root.appendChild(h('h2', { text: 'Хронологія' }));
+    var toggle = h('button', { 'class': 'btn', type: 'button', 'data-action': 'expand-all', text: UI.expandAll });
+    root.appendChild(h('div', { 'class': 'steps-tools' }, [toggle]));
     var steps = h('div', { 'class': 'steps' });
     root.appendChild(steps);
     var lastS1 = lastSessionOneEntry();
     st.log.forEach(function (e, i) {
-      if (e.node === 'FLASH') {
-        steps.appendChild(eventRow(E.NODE.FLASH.entry_expr, E.NODE.FLASH.situation));
-      }
+      if (e.node === 'FLASH') steps.appendChild(eventRow(E.NODE.FLASH.entry_expr, 'Флешбек. ' + E.NODE.FLASH.narration));
       steps.appendChild(stepRow(e, i));
       if (e === lastS1 && st.session2) {
         if (st.flags.walkout) steps.appendChild(eventRow(st.walkoutFace, SC.walkout.text));
@@ -493,8 +622,21 @@
           s2.atEnd, s2.after));
       }
     });
+    function syncToggle() {
+      var all = steps.querySelectorAll('details.step');
+      var open = steps.querySelectorAll('details.step[open]');
+      toggle.textContent = open.length === all.length ? UI.collapseAll : UI.expandAll;
+    }
+    toggle.addEventListener('click', function () {
+      var all = steps.querySelectorAll('details.step');
+      var openAll = steps.querySelectorAll('details.step[open]').length !== all.length;
+      Array.prototype.forEach.call(all, function (d) { d.open = openAll; });
+      syncToggle();
+    });
+    steps.addEventListener('toggle', syncToggle, true);
 
-    root.appendChild(h('h2', { text: 'Прапорці' }));
+    // 5. Прапорці і ризик
+    root.appendChild(h('h2', { text: 'Прапорці і ризик' }));
     var set = Object.keys(st.flags).filter(function (f) { return st.flags[f]; });
     root.appendChild(set.length
       ? h('ul', { 'class': 'flag-list' }, set.map(function (f) {
@@ -504,10 +646,8 @@
         ]);
       }))
       : h('p', { text: 'Жоден прапорець не спрацював.' }));
-
-    root.appendChild(h('h2', { text: 'Як склався індекс ризику R' }));
-    var terms = E.riskTerms(st);
-    var table = h('table', { 'class': 'terms' }, terms.map(function (t) {
+    root.appendChild(h('h3', { text: 'Як склався індекс ризику R' }));
+    var table = h('table', { 'class': 'terms' }, E.riskTerms(st).map(function (t) {
       return h('tr', { 'class': t.value === 0 ? 'zero' : '' }, [
         h('td', { text: TERM_TEXT[t.key] }),
         h('td', { 'class': 'num', text: signed(t.value) })
@@ -515,8 +655,20 @@
     }).concat([h('tr', { 'class': 'total' }, [h('td', { text: 'R' }), h('td', { 'class': 'num', text: String(r) })])]));
     root.appendChild(table);
     root.appendChild(h('p', { text: 'Контакт із допомогою (контрольна зустріч, скерування або КПТ): ' +
-      (E.hasCare(st.flags) ? 'є' : 'немає') + '.' }));
+      (E.hasCare(st.flags) ? 'є' : 'немає') + '. Довіра ' + st.D + ', збудження ' + st.Z + ', сором ' + st.S +
+      '. Фінал ' + endKey + ', бо ' + ENDING_RULE[endKey] + '.' }));
 
+    // 6. Доказова база
+    root.appendChild(h('h2', { text: 'Доказова база' }));
+    root.appendChild(h('ol', { 'class': 'evidence' }, SC.debrief_common.evidence.map(function (ev) {
+      return h('li', null, [
+        h('p', { text: ev.claim }),
+        h('p', { 'class': 'source' }, [ev.source + ' ',
+          h('a', { href: ev.url, target: '_blank', rel: 'noopener noreferrer', text: ev.url })])
+      ]);
+    })));
+
+    // 7. Інші можливі фінали
     root.appendChild(h('h2', { text: 'Інші можливі фінали' }));
     var alt = alternatives();
     root.appendChild(h('ul', { 'class': 'other-list' }, ['E1', 'E2', 'E3', 'E4', 'E5'].filter(function (k) {
@@ -537,6 +689,8 @@
     ]));
   }
 
+  // ---------- Керування ----------
+
   document.addEventListener('keydown', function (ev) {
     if (ev.repeat || ev.altKey || ev.ctrlKey || ev.metaKey) return;
     var t = screen && screen.type;
@@ -545,10 +699,10 @@
       back();
       return;
     }
-    if (t === 'node') {
+    if (t === 'menu') {
       var n = { '1': 0, '2': 1, '3': 2 }[ev.key];
       if (n !== undefined) { ev.preventDefault(); pick(n); }
-    } else if (t === 'intro' || t === 'reply' || t === 'walkout' || t === 'session2' || t === 'epilogue') {
+    } else if (t === 'text' || t === 'title') {
       if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); advance(); }
     }
   });
@@ -559,23 +713,25 @@
 
   var resizeTimer;
   window.addEventListener('resize', function () {
-    if (!screen) return;
-    if (screen.type !== 'debrief') { fitPhoto(); return; }
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
       var y = window.scrollY;
-      renderDebrief();
+      layout();
+      if (screen) render();
       window.scrollTo(0, y);
-    }, 150);
+    }, 120);
   });
 
   // Для автоматичних тестів: знімок стану без доступу до замикання
   window.__novel = {
     state: function () { return JSON.parse(JSON.stringify(st)); },
     screen: function () { return JSON.parse(JSON.stringify(screen)); },
-    historyLength: function () { return history.length; }
+    queueLength: function () { return queue.length; },
+    historyLength: function () { return history.length; },
+    layout: function () { return JSON.parse(JSON.stringify(L)); }
   };
 
+  layout();
   reset();
 })();
 </script>
